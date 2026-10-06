@@ -416,7 +416,10 @@ These are things Claude Code cannot do. Fill in the owner for each one.
 | 2026-10-06 | D-002 | V0.1 is Phases 0 to 12. Phases 13 to 16 are the expansion roadmap. | V0.1 must show the full source-to-annotated-document loop first. |
 | 2026-10-06 | D-003 | The model is chosen by evidence from the frozen test set. DeBERTa, GLiNER and a custom span model are baselines, not a pre-chosen winner. | This is the project goal. |
 | 2026-10-06 | D-004 | Raw, silver, synthetic and gold data are kept separate. The test set is annotated from scratch and frozen before training. | This keeps the benchmark unbiased. |
-| 2026-10-06 | D-005 | The corpus, annotation and models are English only for now. Every document still gets a language label (P5-05). | Human decision. Other languages can be added later. |
+| 2026-10-06 | D-005 | The corpus, annotation and models are English only for now. Every document still gets a language label (P5-05). | Human decision. Other languages can be added later. || 2026-10-07 | D-006 | Code licence is MIT (assumed, awaiting human confirmation). Git remote not yet provided; work is committed locally. | The pasted P0 prompt suggested MIT. |
+| 2026-10-07 | D-007 | Heavy or Windows-fragile libraries (fasttext, playwright, trafilatura, pymupdf, datasketch, httpx) are optional extras, added in the phase that needs them. | Keeps `pip install -e .[dev]` reliable. |
+| 2026-10-07 | D-008 | Pre-commit excludes `data/inherited/`, `TODO.md`, `CLAUDE.md`. | Hooks must never rewrite read-only inherited data. |
+
 
 ## Progress log
 
@@ -425,3 +428,4 @@ Newest first, one line per finished task.
 | Date | Task | What changed | Checks | Commit |
 |---|---|---|---|---|
 | 2026-10-06 | Planning | Wrote TODO.md from the 17-phase project plan, in the format of the reference TODO | n/a | n/a |
+| 2026-10-07 | P0-01..P0-11 (pasted prompt) | Repo, tooling, validators, inherited assets, docs, leakage framework; see reports/P0_REPORT.md | 36 tests, ruff, black, mypy, pre-commit pass | see git log |

@@ -14,11 +14,11 @@ P0-01 to P0-11 built and committed locally. See `reports/P0_REPORT.md` for the p
 
 ## Tests
 ```
-Tests run: 35
-Passed: 35
+Tests run: 36
+Passed: 36
 Failed: 0
 Skipped: 0
-Coverage: 81% (src/)
+Coverage: 91% (src/)
 ruff: clean | black: clean | mypy --strict: clean
 ```
 
@@ -29,7 +29,7 @@ None (no earlier phase).
 - FACT: `data/inherited` CSV hashes match `configs/inherited_checksums.yaml`; rows 992 and 207 (tested).
 - FACT: ontology and ingestion tables in `docs/` are generated from the CSVs, not hand-typed.
 - FACT: leakage checks pass on the empty state and fail on injected overlaps (tested).
-- UNVERIFIED: GitHub Actions, pre-commit, Python 3.12, `make` targets (not available locally).
+- UNVERIFIED: GitHub Actions, Python 3.12, `make` targets (not available locally).
 
 ## Gate Decision
 **PASS-WITH-FIXES**: the delivered part is sound, but the phase cannot close until P0-12/P0-13 are supplied, a remote exists for CI to run, and the TODO.md-vs-prompt task-list conflict is ruled on.

@@ -51,8 +51,9 @@ def ambiguous_abbreviations(entities: pd.DataFrame) -> list[tuple[str, list[str]
     by_abbr: dict[str, list[str]] = {}
     flagged: set[str] = set()
     for _, row in entities.iterrows():
-        notes = row.get("notes", "").lower()
-        for abbr in filter(None, (a.strip() for a in row.get("abbreviations", "").split(";"))):
+        notes = str(row.get("notes", "")).lower()
+        abbrs: list[str] = [a.strip() for a in str(row.get("abbreviations", "")).split(";")]
+        for abbr in filter(None, abbrs):
             by_abbr.setdefault(abbr, []).append(row["entity_text"])
             if "ambig" in notes or "collid" in notes or "collision" in notes:
                 flagged.add(abbr)

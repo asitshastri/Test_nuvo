@@ -24,7 +24,7 @@
 
 ## Key numbers (FACT)
 
-- 35 tests pass; coverage 81% (`src.load_inherited` CLI is untested, 0%).
+- 36 tests pass; coverage 91%.
 - ruff clean, black clean, mypy `--strict` clean on 12 source files.
 - Commits: 4 local, on branch `main`.
 
@@ -41,7 +41,7 @@
 ## Not verified
 
 - `make help` / `make ci`: `make` is not installed on this Windows machine. The underlying commands were run directly.
-- pre-commit hooks: `pre-commit` not installed or run (UNVERIFIED).
+- pre-commit: FACT, `pre-commit run --all-files` passes all 7 hooks (excludes `data/inherited/`, `TODO.md`, `CLAUDE.md` so hooks cannot rewrite them; the first run tried to).
 - Python 3.12 test run: not run; only 3.11.4 available (UNVERIFIED). CI matrix covers it once pushed.
 - `chmod 444`: on Windows this sets the read-only attribute only; integrity relies on the checksum test.
 - Git push: no remote provided; nothing pushed.
