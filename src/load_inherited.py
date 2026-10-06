@@ -11,6 +11,7 @@ from pathlib import Path
 import yaml
 
 from src.inherited import checksum_inherited, generate_report, load_entities, load_sources
+from src.run_log import RunLog
 
 DEFAULT_CONFIG = Path("configs/pipeline.yaml")
 DEFAULTS = {
@@ -27,12 +28,16 @@ def main() -> None:
     ap.add_argument("--dry-run", action="store_true", help="load and report, write nothing")
     args = ap.parse_args()
 
+    run = RunLog("load_inherited")
+    run.set_config_hash(args.config)
     cfg = yaml.safe_load(args.config.read_text(encoding="utf-8")) or {}
     paths = {**DEFAULTS, **(cfg.get("inherited") or {})}
     entities_path, sources_path = Path(paths["entities"]), Path(paths["sources"])
 
     entities, sources = load_entities(entities_path), load_sources(sources_path)
     print(f"Loaded {len(entities)} entities, {len(sources)} sources")
+    run.add_input("entities", len(entities))
+    run.add_input("sources", len(sources))
     report = generate_report(entities, sources)
     if args.dry_run:
         print("dry-run: nothing written")
@@ -42,6 +47,8 @@ def main() -> None:
     Path(paths["report"]).write_text(report, encoding="utf-8")
     for p in (entities_path, sources_path):
         p.chmod(stat.S_IREAD)  # 0o444 on POSIX; read-only attribute on Windows
+    run.add_output("report", 1)
+    run.save()
     print(f"Wrote {paths['checksums']} and {paths['report']}; CSVs set read-only")
 
 
