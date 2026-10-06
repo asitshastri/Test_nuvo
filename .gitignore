@@ -1,0 +1,46 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+*.egg-info/
+dist/
+build/
+.eggs/
+.venv
+venv/
+ENV/
+env/
+.env
+
+# Testing / typing
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Data tiers (never commit bulk data; keep folder markers)
+data/raw/**
+!data/raw/.gitkeep
+data/clean/**
+!data/clean/.gitkeep
+data/silver/**
+!data/silver/.gitkeep
+data/synthetic/**
+!data/synthetic/.gitkeep
+data/reviewed/**
+!data/reviewed/.gitkeep
+data/gold/**
+!data/gold/.gitkeep
+data/slices/**
+!data/slices/.gitkeep
+
+experiments/RUN-*.json
+*.tmp
+*.bak
+*~
