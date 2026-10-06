@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "entity",
+  "type": "object",
+  "required": [
+    "entity_id",
+    "entity_text",
+    "entity_type",
+    "subtype"
+  ],
+  "properties": {
+    "entity_id": {
+      "type": "string"
+    },
+    "entity_text": {
+      "type": "string"
+    },
+    "entity_type": {
+      "type": "string"
+    },
+    "subtype": {
+      "type": "string"
+    },
+    "aliases": {
+      "type": "string"
+    },
+    "abbreviations": {
+      "type": "string"
+    },
+    "country_region": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "source": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "ontology_status": {
+      "type": "string"
+    },
+    "origin": {
+      "type": "string"
+    },
+    "verification_status": {
+      "type": "string"
+    },
+    "confidence": {
+      "enum": [
+        "high",
+        "medium",
+        "low"
+      ]
+    }
+  }
+}

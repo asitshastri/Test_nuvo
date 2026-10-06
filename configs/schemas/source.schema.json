@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "source",
+  "type": "object",
+  "required": [
+    "source_id",
+    "source_name",
+    "url",
+    "domain",
+    "source_type"
+  ],
+  "properties": {
+    "source_id": {
+      "type": "string"
+    },
+    "source_name": {
+      "type": "string"
+    },
+    "url": {
+      "type": "string"
+    },
+    "domain": {
+      "type": "string"
+    },
+    "source_type": {
+      "type": "string"
+    },
+    "access_method": {
+      "type": "string"
+    },
+    "language": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "verification_status": {
+      "type": "string"
+    },
+    "credibility_tier": {
+      "enum": [
+        "A",
+        "B",
+        "C"
+      ]
+    }
+  }
+}

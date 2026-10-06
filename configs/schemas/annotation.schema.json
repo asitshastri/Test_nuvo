@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "annotation",
+  "type": "object",
+  "required": [
+    "doc_id",
+    "start",
+    "end",
+    "text",
+    "entity_id",
+    "entity_type",
+    "tier"
+  ],
+  "properties": {
+    "doc_id": {
+      "type": "string"
+    },
+    "text": {
+      "type": "string"
+    },
+    "entity_id": {
+      "type": "string"
+    },
+    "entity_type": {
+      "type": "string"
+    },
+    "subtype": {
+      "type": "string"
+    },
+    "annotator_id": {
+      "type": "string"
+    },
+    "tier": {
+      "type": "string"
+    },
+    "ontology_version": {
+      "type": "string"
+    },
+    "start": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "end": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    }
+  }
+}

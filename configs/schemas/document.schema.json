@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "document",
+  "type": "object",
+  "required": [
+    "doc_id",
+    "source_id",
+    "url",
+    "fetch_time",
+    "raw_bytes_hash",
+    "tier"
+  ],
+  "properties": {
+    "doc_id": {
+      "type": "string"
+    },
+    "source_id": {
+      "type": "string"
+    },
+    "url": {
+      "type": "string"
+    },
+    "fetch_time": {
+      "type": "string"
+    },
+    "raw_bytes_hash": {
+      "type": "string"
+    },
+    "language": {
+      "type": "string"
+    },
+    "tier": {
+      "type": "string"
+    },
+    "ontology_version": {
+      "type": "string"
+    },
+    "processing_version": {
+      "type": "string"
+    }
+  }
+}
