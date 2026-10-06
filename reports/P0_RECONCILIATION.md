@@ -85,11 +85,11 @@ Not implemented here, per instruction: no large body of new work was created to 
 | `ruff check .` | all checks passed |
 | `black --check src tests` | clean |
 | `mypy src --strict` | no issues in 14 files |
-| `pre-commit run --all-files` | see final line below |
+| `pre-commit run --all-files` | all 7 hooks passed |
 | `python -m src.leakage` | all checks passed (empty tiers) |
 | `python -m src.tier_utils --check-all-tiers` | no overlaps |
 | `python -m src.load_inherited --dry-run` | 992 entities, 207 sources loaded (also covered by tests) |
-| GitHub Actions | last pushed commit green on 3.11 and 3.12 (run 37526762860); the run for the reconciliation commit is recorded below |
+| GitHub Actions | last pushed commit green on 3.11 and 3.12 (run 37526762860); reconciliation commit 5a593be: run 37527734304 green on 3.11 and 3.12, including the new `python -m src.leakage` step |
 
 `make` is not installed on this machine: `make help` and `make ci` were **not** run. The equivalent commands above were run directly.
 
