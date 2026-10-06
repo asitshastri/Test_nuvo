@@ -66,7 +66,7 @@ Data: <corpus docs raw/clean, gold sentences, KB entities, if changed>
 
 | Phase | Name | Scope | Total | Done | In progress | Blocked |
 |---|---|---|---|---|---|---|
-| 0 | Project definition and architecture | V0.1 | 13 | 0 | 0 | 0 |
+| 0 | Project definition and architecture | V0.1 | 13 | 13 | 0 | 0 |
 | 1 | Defence NER ontology | V0.1 | 8 | 0 | 0 | 0 |
 | 2 | Entity knowledge base | V0.1 | 9 | 0 | 0 | 0 |
 | 3 | Source validation and acquisition | V0.1 | 10 | 0 | 0 | 0 |
@@ -83,8 +83,8 @@ Data: <corpus docs raw/clean, gold sentences, KB entities, if changed>
 | 14 | Human-in-the-loop and active learning | Roadmap | 9 | 0 | 0 | 0 |
 | 15 | Continuous model improvement | Roadmap | 10 | 0 | 0 | 0 |
 | 16 | Advanced defence NLP platform | Roadmap | 9 | 0 | 0 | 0 |
-| | **V0.1 total (Phases 0–12)** | | **122** | **0** | **0** | **0** |
-| | **All phases** | | **160** | **0** | **0** | **0** |
+| | **V0.1 total (Phases 0–12)** | | **122** | **13** | **0** | **0** |
+| | **All phases** | | **160** | **13** | **0** | **0** |
 
 **Key numbers** (update these when they change)
 
@@ -108,9 +108,9 @@ Nothing has started yet. The project starts from zero, and the only inherited as
 
 | Ask | Why | Needed by | Status |
 |---|---|---|---|
-| Put `01_NER_MASTER_LIST.csv` and `02_SOURCE_MASTER_LIST.csv` in `data/inherited/` | These are the only inputs. Claude will checksum them and set them read-only. | P0-03 | Not started |
-| Create the Git remote and decide on a licence for the code (the corpus licence is a separate question) | Repository setup | P0-01 | Not started |
-| Fill in the Human checklist (owners) | Annotators and compute have long lead times | P0-13 | Not started |
+| Put `01_NER_MASTER_LIST.csv` and `02_SOURCE_MASTER_LIST.csv` in `data/inherited/` | These are the only inputs. Claude will checksum them and set them read-only. | P0-03 | Done 2026-10-07 |
+| Create the Git remote and decide on a licence for the code (the corpus licence is a separate question) | Repository setup | P0-01 | Done: remote asitshastri/Test_nuvo, MIT |
+| Fill in the owners in the Human checklist (TODO.md and `docs/05_HUMAN_REVIEW_CHECKLIST.md`) and sign off `reports/P0_REPORT.md` | Annotators and compute have long lead times | P0-13 | Not started |
 
 ## Questions for the human (ask these when the human is back)
 
@@ -130,7 +130,8 @@ New tasks found while working. Claude appends them here and the human triages ea
 
 | Date | Found during | Task | Size | Owner | Acceptance criteria | Triage |
 |---|---|---|---|---|---|---|
-| | | | | | | |
+| 2026-10-07 | P0 closure | Carry forward original Phase 0 items the prompt did not cover: project-spec.md, v0.1-scope.md (human sign-off), architecture.md, data-model.md, pydantic config validation + `.env.example` + seed helper, experiment-tracking/data-versioning ADR, CI secret scan | M | C+H | Each doc exists and the human has reviewed it | Untriaged |
+| 2026-10-07 | P0 closure | Add a CI step that runs `python -m src.leakage` | S | C | CI fails on an injected overlap | Untriaged |
 
 ## Later: ideas for after V0.1
 
@@ -420,6 +421,7 @@ These are things Claude Code cannot do. Fill in the owner for each one.
 | 2026-10-07 | D-006 | Code licence is MIT (assumed, awaiting human confirmation). Git remote not yet provided; work is committed locally. | The pasted P0 prompt suggested MIT. |
 | 2026-10-07 | D-007 | Heavy or Windows-fragile libraries (fasttext, playwright, trafilatura, pymupdf, datasketch, httpx) are optional extras, added in the phase that needs them. | Keeps `pip install -e .[dev]` reliable. |
 | 2026-10-07 | D-008 | Pre-commit excludes `data/inherited/`, `TODO.md`, `CLAUDE.md`. | Hooks must never rewrite read-only inherited data. |
+| 2026-10-07 | D-009 | For Phase 0 the pasted P0 prompt's task list (P0-01..P0-13) supersedes the Phase 0 list originally written in this file. Original items not covered are carried forward in DISCOVERED. For later phases the phase prompt is authoritative and TODO.md is the dashboard. | Human ruling, 2026-10-07. |
 
 ## Progress log
 

@@ -116,6 +116,14 @@ fixed slice · metrics before→after · cost · error clusters · KEEP/DROP/MOD
 - Small, reviewable commits. Never commit secrets or raw copyrighted bulk text to git.
 
 
+## Current state  (update at the end of every phase)
+Date: 7 Oct 2026
+Last phase closed: P0 (see `reports/P0_REPORT.md`; awaiting human sign-off)
+Next prompt: P1 (ontology) and P3 (sources); prompts not yet in `prompts/`
+Registry: draft (v2.5, 207 inherited sources, all UNVERIFIED) · Ontology: v0.1 draft (992 inherited entities) · Acquisition: not implemented
+Repo: github.com/asitshastri/Test_nuvo (public; CI green on 3.11 and 3.12)
+Gold: 0 docs · Silver: 0 · Model: none · Open blockers: team size, GPU, LLM-API policy undecided
+
 ## Definition of done (31 Oct)
 Registry verified + ranked · compliant route per source · full provenance + hashes ·
 corpus cleaned, language-tagged, deduped, relevance-scored · ontology + guidelines v1.0 frozen ·
