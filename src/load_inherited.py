@@ -10,7 +10,13 @@ from pathlib import Path
 
 import yaml
 
-from src.inherited import checksum_inherited, generate_report, load_entities, load_sources
+from src.inherited import (
+    checksum_inherited,
+    generate_report,
+    load_entities,
+    load_sources,
+    write_checksums_txt,
+)
 from src.run_log import RunLog
 
 DEFAULT_CONFIG = Path("configs/pipeline.yaml")
@@ -44,6 +50,7 @@ def main() -> None:
         return
 
     checksum_inherited(entities_path, sources_path, Path(paths["checksums"]))
+    write_checksums_txt([entities_path, sources_path], entities_path.parent / "CHECKSUMS.txt")
     Path(paths["report"]).write_text(report, encoding="utf-8")
     for p in (entities_path, sources_path):
         p.chmod(stat.S_IREAD)  # 0o444 on POSIX; read-only attribute on Windows

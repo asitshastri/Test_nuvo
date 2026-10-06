@@ -46,6 +46,12 @@ def checksum_inherited(
     return checksums
 
 
+def write_checksums_txt(paths: list[Path], output_path: Path) -> None:
+    """Write ``sha256sum``-style lines (``<hex>  <filename>``) for the given files."""
+    lines = [f"{sha256_file(p).removeprefix('sha256:')}  {p.name}" for p in sorted(paths)]
+    output_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
 def ambiguous_abbreviations(entities: pd.DataFrame) -> list[tuple[str, list[str]]]:
     """Abbreviations shared by >1 entity, plus those flagged ambiguous/colliding in notes."""
     by_abbr: dict[str, list[str]] = {}

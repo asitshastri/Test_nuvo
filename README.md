@@ -1,6 +1,6 @@
 # Defence/Security Corpus and NER Platform
 
-A reproducible, auditable pipeline for building a continuously-growing defence and security corpus with structured entity annotations.
+The goal is a curated, verified defence and security corpus with human-verified entity annotations. From it we train our own free, locally deployable defence NER model that we control.
 
 ## Mission
 

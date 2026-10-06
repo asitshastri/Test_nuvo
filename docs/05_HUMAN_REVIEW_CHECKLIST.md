@@ -4,10 +4,11 @@ Things only the human can do or approve. This file mirrors the "Human checklist"
 
 | Phase | Item | Needed by task | Owner | Due | Sign-off |
 |---|---|---|---|---|---|
-| P0 | Git remote and code licence (licence: MIT assumed, remote: not yet provided) | P0-01 | | | ☐ |
+| P0 | Git remote and code licence. FACT: remote `asitshastri/Test_nuvo`, MIT, confirmed by the human 2026-10-07 | P0-01 | | | ☐ |
+| P0 | Repository visibility. FACT: currently PUBLIC; no decision recorded | P0-01 | | | ☐ |
 | P0 | Inherited CSVs placed in `data/inherited/` (done, 2026-10-07) | P0-03 | | | ☐ |
 | P0 | V0.1 scope signed off | P0-05 | | | ☐ |
-| P0 | P0 report and review read and approved | P0 gate | | | ☐ |
+| P0 | `reports/P0_RECONCILIATION.md`, `P0_REPORT.md` and `P0_REVIEW.md` read and approved | P0 gate | | | ☐ |
 | P1 | Ontology label set approved, ontology signed off | P1-02, P1-08 | | | ☐ |
 | P3 | Source credibility tiers reviewed | P3-03 | | | ☐ |
 | P3 | Terms-of-use and licence policy for restricted sources | P3-05, P12-07 | | | ☐ |

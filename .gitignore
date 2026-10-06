@@ -11,6 +11,8 @@ venv/
 ENV/
 env/
 .env
+.env.*
+!.env.example
 
 # Testing / typing
 .pytest_cache/
@@ -44,3 +46,13 @@ experiments/RUN-*.json
 *.tmp
 *.bak
 *~
+
+# Model files and large artefacts
+models/
+*.pt
+*.pth
+*.bin
+*.safetensors
+*.onnx
+*.ckpt
+*.bin.gz

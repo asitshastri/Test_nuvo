@@ -72,3 +72,25 @@ class TestLockedInherited:
             load_sources(ROOT / str(spec["sources_csv"]["path"])),
         )
         assert "Total: 992" in report and "Total: 207" in report
+
+
+def test_checksums_txt_matches_files() -> None:
+    txt = ROOT / "data" / "inherited" / "CHECKSUMS.txt"
+    assert txt.exists()
+    for line in txt.read_text().splitlines():
+        digest, name = line.split("  ", 1)
+        assert sha256_file(ROOT / "data" / "inherited" / name) == f"sha256:{digest}"
+
+
+def test_changing_a_byte_breaks_checksum(tmp_path: Path) -> None:
+    spec = yaml.safe_load(CHECKSUMS.read_text())["entities_csv"]
+    copy = tmp_path / "copy.csv"
+    data = bytearray((ROOT / spec["path"]).read_bytes())
+    assert sha256_file(copy := _write(copy, bytes(data))) == spec["sha256"]
+    data[0] ^= 1
+    assert sha256_file(_write(copy, bytes(data))) != spec["sha256"]
+
+
+def _write(path: Path, data: bytes) -> Path:
+    path.write_bytes(data)
+    return path

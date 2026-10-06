@@ -66,7 +66,7 @@ Data: <corpus docs raw/clean, gold sentences, KB entities, if changed>
 
 | Phase | Name | Scope | Total | Done | In progress | Blocked |
 |---|---|---|---|---|---|---|
-| 0 | Project definition and architecture | V0.1 | 13 | 13 | 0 | 0 |
+| 0 | Project definition and architecture | V0.1 | 13 | 3 | 0 | 2 |
 | 1 | Defence NER ontology | V0.1 | 8 | 0 | 0 | 0 |
 | 2 | Entity knowledge base | V0.1 | 9 | 0 | 0 | 0 |
 | 3 | Source validation and acquisition | V0.1 | 10 | 0 | 0 | 0 |
@@ -83,8 +83,8 @@ Data: <corpus docs raw/clean, gold sentences, KB entities, if changed>
 | 14 | Human-in-the-loop and active learning | Roadmap | 9 | 0 | 0 | 0 |
 | 15 | Continuous model improvement | Roadmap | 10 | 0 | 0 | 0 |
 | 16 | Advanced defence NLP platform | Roadmap | 9 | 0 | 0 | 0 |
-| | **V0.1 total (Phases 0–12)** | | **122** | **13** | **0** | **0** |
-| | **All phases** | | **160** | **13** | **0** | **0** |
+| | **V0.1 total (Phases 0–12)** | | **122** | **3** | **0** | **2** |
+| | **All phases** | | **160** | **3** | **0** | **2** |
 
 **Key numbers** (update these when they change)
 
@@ -102,15 +102,20 @@ Data: <corpus docs raw/clean, gold sentences, KB entities, if changed>
 
 ## Current focus
 
-Nothing has started yet. The project starts from zero, and the only inherited assets are `01_NER_MASTER_LIST.csv` (992 entities) and `02_SOURCE_MASTER_LIST.csv` (207 sources). The first steps are P0-01 (repository), P0-02 (`CLAUDE.md`) and P0-03 (bringing in the inherited CSVs). Choices that belong to later phases, such as annotators, compute, outside APIs and redistribution, are made when that phase starts.
+Phase 0 reconciliation done on 2026-10-07 (see `reports/P0_RECONCILIATION.md`). The engineering foundation is built, pushed and CI-green (45 tests, 92% coverage). Of the 13 original P0 tasks, 3 meet their AC (P0-01, P0-02, P0-03). P0-05 (scope) gates P1; P0-06, P0-07, P0-10 and the CI secret scan gate P3. Verdict: PASS-WITH-FIXES. P1 and P3 have not started.
 
 ## Needs you
 
 | Ask | Why | Needed by | Status |
 |---|---|---|---|
-| Put `01_NER_MASTER_LIST.csv` and `02_SOURCE_MASTER_LIST.csv` in `data/inherited/` | These are the only inputs. Claude will checksum them and set them read-only. | P0-03 | Done 2026-10-07 |
-| Create the Git remote and decide on a licence for the code (the corpus licence is a separate question) | Repository setup | P0-01 | Done: remote asitshastri/Test_nuvo, MIT |
-| Fill in the owners in the Human checklist (TODO.md and `docs/05_HUMAN_REVIEW_CHECKLIST.md`) and sign off `reports/P0_REPORT.md` | Annotators and compute have long lead times | P0-13 | Not started |
+| Decide repository visibility. `asitshastri/Test_nuvo` is PUBLIC and contains `CLAUDE.md`, `TODO.md` and the inherited CSVs | The CSVs are project assets; Claude did not change visibility | now | Pending |
+| Review and sign off `docs/v0.1-scope.md` once Claude drafts it | Gates P1-02 (label set) | P0-05 | Pending |
+| Sign off `reports/P0_REPORT.md` and `reports/P0_REVIEW.md` | Phase gate | P0 close | Pending |
+| Fill owners and due dates in the Human checklist (below and `docs/05_HUMAN_REVIEW_CHECKLIST.md`) | Annotators and compute have long lead times | P0-13 | Pending |
+| Choose experiment tracking and data versioning (Claude recommends RunLog + hash manifests) | Needed for the ADR | P0-11 | Pending |
+| Rule on module naming: CLAUDE.md (`collect, process, ...`) or TODO.md (`acquisition, processing, kb, ...`) | Skeleton and architecture.md depend on it | P0-08 | Pending |
+| Rewrite CLAUDE.md hard rules 1 and 2, which contradict rule 4 and the [COMP] rules | Compliance risk | before P3 | Pending |
+| Inherited CSVs placed in `data/inherited/`; remote `asitshastri/Test_nuvo` and MIT chosen | | P0-01, P0-03 | Done 2026-10-07 |
 
 ## Questions for the human (ask these when the human is back)
 
@@ -118,11 +123,16 @@ When the human is away, Claude keeps working and never waits. If a task needs th
 
 | Added | Task | Question | Why it matters | What Claude did meanwhile |
 |---|---|---|---|---|
-| | | | | |
+| 2026-10-07 | P0 | Should the repository stay public? | It holds the inherited CSVs and planning docs | Left unchanged |
+| 2026-10-07 | P0-05 | Approve V0.1 scope (entity types, languages, source types) after Claude's draft | Gates P1-02 | Not drafted yet; English only per D-005 |
+| 2026-10-07 | P0-11 | Accept RunLog + hash manifests, no MLflow/DVC, for V0.1? | Needs an ADR | RunLog already logs runs |
+| 2026-10-07 | P0-08 | Module names: CLAUDE.md or TODO.md convention? | Tree must match architecture.md | Kept CLAUDE.md names |
+| 2026-10-07 | P0-02 | CLAUDE.md hard rules 1-2 say access controls may be defeated; rule 4 and [COMP] say stop. Which holds? | Compliance | Following rule 4 and [COMP] |
+| 2026-10-07 | P0-13 | Who owns each Human checklist item, and by when? | Lead times | Left blank, no invented names or dates |
 
 ## Blockers
 
-None.
+No engineering blocker. P1 is gated by P0-05 (scope sign-off). P3 is gated by P0-06, P0-07, P0-10 and the CI secret scan from P0-12. Human items are in Needs you.
 
 ## DISCOVERED
 
@@ -130,8 +140,9 @@ New tasks found while working. Claude appends them here and the human triages ea
 
 | Date | Found during | Task | Size | Owner | Acceptance criteria | Triage |
 |---|---|---|---|---|---|---|
-| 2026-10-07 | P0 closure | Carry forward original Phase 0 items the prompt did not cover: project-spec.md, v0.1-scope.md (human sign-off), architecture.md, data-model.md, pydantic config validation + `.env.example` + seed helper, experiment-tracking/data-versioning ADR, CI secret scan | M | C+H | Each doc exists and the human has reviewed it | Untriaged |
-| 2026-10-07 | P0 closure | Add a CI step that runs `python -m src.leakage` | S | C | CI fails on an injected overlap | Untriaged |
+| 2026-10-07 | P0 reconciliation | Fix dangling references in CLAUDE.md (`docs/07_TODO.md`, `docs/12_PIPELINE_V0_1_OPENALEX.md`, `docs/web-scraping-knowledge-base.md`, `prompts/P00-P14`): create, repoint or remove | S | C+H | No CLAUDE.md path points to a missing file | Untriaged |
+| 2026-10-07 | P0 reconciliation | Test that loads the JSON Schemas in `configs/schemas/` and validates valid and broken samples (needs `jsonschema` or pydantic) | S | C | Valid samples pass and broken fail, via the schema files | Untriaged (fold into P0-07) |
+| 2026-10-07 | P0 reconciliation | Near-duplicate leakage check (content hash / MinHash) alongside the `doc_id` check | M | C | An injected near-duplicate across gold and train is detected | Untriaged (P5 / P7-02) |
 
 ## Later: ideas for after V0.1
 
@@ -147,19 +158,19 @@ Ideas that are not in Phases 13 to 16 but should not be forgotten. Each row says
 
 Goal: decide exactly what we are building before writing the system.
 
-- [ ] **P0-01** (S, C+H) Initialise the Git repository. Add a `.gitignore` that excludes `.env*`, `data/raw/`, large data and model files, caches and virtual environments. Add a README stub. The human chooses the remote and the code licence. *AC:* the first commit is pushed and the README states the project goal in two sentences.
-- [ ] **P0-02** (S, C) Write `CLAUDE.md`, covering the project context, the data rules from this file, the folder layout, the commands to run, the [INT] and [COMP] rules, and a rule never to edit `data/inherited/`. *AC:* the file exists and every rule in "Data rules" above appears in it.
-- [ ] **P0-03** (S, C+H) Bring in the inherited assets. The human places the two CSVs. Claude writes SHA-256 checksums to `data/inherited/CHECKSUMS.txt`, sets the files read-only, and adds a test that fails if a checksum changes. *AC:* the checksum test passes, and changing a byte makes it fail.
-- [ ] **P0-04** (S, C+H) Write `docs/project-spec.md`, covering the problem, the research question, the technical objective, the expected outputs and the long-term vision. *AC:* the human has reviewed it.
-- [ ] **P0-05** (S, C+H) Write `docs/v0.1-scope.md`. It splits work into must-have, should-have and later, and records the scope choices: entity types, languages and source types. *AC:* the human has signed it off and the choices are recorded in Decisions.
-- [ ] **P0-06** (M, C) Write `docs/architecture.md`. It covers the components (sources → acquisition → raw → processing → annotation → gold/silver/synthetic → training → model → automatic annotation), the inputs and outputs of each stage, the storage layout, and an `docs/adr/` folder with a template. *AC:* every stage has defined input and output formats. 
-- [ ] **P0-07** (M, C) Define the data model in `docs/data-model.md` and `schemas/`. This covers the document ID, entity ID, annotation ID and dataset version schemes, and the provenance record. Write JSON Schemas for document, annotation, entity, source and acquisition-log records. *AC:* sample records validate, broken samples fail, and both cases are tested.
-- [ ] **P0-08** (S, C) Create the repository skeleton. The package has modules for `acquisition`, `processing`, `kb`, `annotation`, `synthetic`, `models`, `evaluation` and `annotator`. Also create `configs/`, `data/{inherited,raw,clean,gold,silver,synthetic}/`, `reports/` and `docs/`. *AC:* the tree matches `docs/architecture.md`.
-- [ ] **P0-09** (S, C) Set up the toolchain. Pin the Python version, choose an environment manager with a lockfile, and add ruff, a type checker, pytest and pre-commit. *AC:* lint, the type check and the tests pass on a sample test, and pre-commit runs.
-- [ ] **P0-10** (S, C) Build the configuration system: YAML configs validated with pydantic, a `.env.example` containing names only, and a single helper that sets the random seed. *AC:* an invalid config fails with a clear error, and this is tested.
-- [ ] **P0-11** (S, C+H) Choose experiment tracking (for example local MLflow) and data versioning (for example DVC, or hash manifests), and record the choice in an ADR. *AC:* a dummy run is logged with its config, its data version and the git commit.
-- [ ] **P0-12** (S, C) Set up CI: lint, type check, tests, schema validation, a secret scan, and a slot for the P7-02 leakage check. *AC:* CI is green on a test pull request.
-- [ ] **P0-13** (S, H) Fill in the Human checklist below with owners. *AC:* the table is filled.
+- [x] **P0-01** (S, C+H) Initialise the Git repository. Add a `.gitignore` that excludes `.env*`, `data/raw/`, large data and model files, caches and virtual environments. Add a README stub. The human chooses the remote and the code licence. *AC:* the first commit is pushed and the README states the project goal in two sentences. *Status:* Done 2026-10-07: pushed to asitshastri/Test_nuvo, MIT; see reports/P0_RECONCILIATION.md.
+- [x] **P0-02** (S, C) Write `CLAUDE.md`, covering the project context, the data rules from this file, the folder layout, the commands to run, the [INT] and [COMP] rules, and a rule never to edit `data/inherited/`. *AC:* the file exists and every rule in "Data rules" above appears in it. *Status:* Done 2026-10-07: Data rules, commands and [INT]/[COMP] added to CLAUDE.md.
+- [x] **P0-03** (S, C+H) Bring in the inherited assets. The human places the two CSVs. Claude writes SHA-256 checksums to `data/inherited/CHECKSUMS.txt`, sets the files read-only, and adds a test that fails if a checksum changes. *AC:* the checksum test passes, and changing a byte makes it fail. *Status:* Done 2026-10-07: data/inherited/CHECKSUMS.txt, byte-flip test, files read-only.
+- [ ] **P0-04** (S, C+H) Write `docs/project-spec.md`, covering the problem, the research question, the technical objective, the expected outputs and the long-term vision. *AC:* the human has reviewed it. *Status:* Not written. Safe to carry forward.
+- [ ] **P0-05** (S, C+H) Write `docs/v0.1-scope.md`. It splits work into must-have, should-have and later, and records the scope choices: entity types, languages and source types. *AC:* the human has signed it off and the choices are recorded in Decisions. *Status:* Not written. Required before P1; needs the human sign-off.
+- [ ] **P0-06** (M, C) Write `docs/architecture.md`. It covers the components (sources → acquisition → raw → processing → annotation → gold/silver/synthetic → training → model → automatic annotation), the inputs and outputs of each stage, the storage layout, and an `docs/adr/` folder with a template. *AC:* every stage has defined input and output formats.  *Status:* Not written. Required before P3. Partial overlap: docs/02_DATA_TIERS.md, docs/03_INGESTION_ORDER.md.
+- [ ] **P0-07** (M, C) Define the data model in `docs/data-model.md` and `schemas/`. This covers the document ID, entity ID, annotation ID and dataset version schemes, and the provenance record. Write JSON Schemas for document, annotation, entity, source and acquisition-log records. *AC:* sample records validate, broken samples fail, and both cases are tested. *Status:* Partial: 4 of 5 JSON Schemas in configs/schemas/ and validators with tests; no acquisition-log schema, ID schemes or provenance doc. Required before P3.
+- [ ] **P0-08** (S, C) Create the repository skeleton. The package has modules for `acquisition`, `processing`, `kb`, `annotation`, `synthetic`, `models`, `evaluation` and `annotator`. Also create `configs/`, `data/{inherited,raw,clean,gold,silver,synthetic}/`, `reports/` and `docs/`. *AC:* the tree matches `docs/architecture.md`. *Status:* Partial: folders exist; package names follow CLAUDE.md, not this list. Needs the human's naming ruling.
+- [ ] **P0-09** (S, C) Set up the toolchain. Pin the Python version, choose an environment manager with a lockfile, and add ruff, a type checker, pytest and pre-commit. *AC:* lint, the type check and the tests pass on a sample test, and pre-commit runs. *Status:* Partial: AC met (ruff, mypy, pytest, pre-commit pass) but no lockfile yet.
+- [ ] **P0-10** (S, C) Build the configuration system: YAML configs validated with pydantic, a `.env.example` containing names only, and a single helper that sets the random seed. *AC:* an invalid config fails with a clear error, and this is tested. *Status:* Not done: no pydantic config, .env.example or seed helper. Required before P3.
+- [!] **P0-11** (S, C+H) Choose experiment tracking (for example local MLflow) and data versioning (for example DVC, or hash manifests), and record the choice in an ADR. *AC:* a dummy run is logged with its config, its data version and the git commit. *Status:* Blocked on the human's tooling choice. Partial: src/run_log.py logs config hash, git hash, inputs and outputs; no ADR.
+- [ ] **P0-12** (S, C) Set up CI: lint, type check, tests, schema validation, a secret scan, and a slot for the P7-02 leakage check. *AC:* CI is green on a test pull request. *Status:* Partial: CI runs lint, types, tests and src.leakage on 3.11 and 3.12; secret scan, schema step and a test PR missing. Secret scan required before P3.
+- [!] **P0-13** (S, H) Fill in the Human checklist below with owners. *AC:* the table is filled. *Status:* Blocked on the human: owners and dates are blank.
 
 ## Phase 1: Defence NER ontology
 
@@ -418,10 +429,10 @@ These are things Claude Code cannot do. Fill in the owner for each one.
 | 2026-10-06 | D-003 | The model is chosen by evidence from the frozen test set. DeBERTa, GLiNER and a custom span model are baselines, not a pre-chosen winner. | This is the project goal. |
 | 2026-10-06 | D-004 | Raw, silver, synthetic and gold data are kept separate. The test set is annotated from scratch and frozen before training. | This keeps the benchmark unbiased. |
 | 2026-10-06 | D-005 | The corpus, annotation and models are English only for now. Every document still gets a language label (P5-05). | Human decision. Other languages can be added later. |
-| 2026-10-07 | D-006 | Code licence is MIT (assumed, awaiting human confirmation). Git remote not yet provided; work is committed locally. | The pasted P0 prompt suggested MIT. |
+| 2026-10-07 | D-006 | The code licence is MIT and the Git remote is `https://github.com/asitshastri/Test_nuvo.git`. The corpus licence is decided in P3. | Human confirmed both on 2026-10-07. |
 | 2026-10-07 | D-007 | Heavy or Windows-fragile libraries (fasttext, playwright, trafilatura, pymupdf, datasketch, httpx) are optional extras, added in the phase that needs them. | Keeps `pip install -e .[dev]` reliable. |
 | 2026-10-07 | D-008 | Pre-commit excludes `data/inherited/`, `TODO.md`, `CLAUDE.md`. | Hooks must never rewrite read-only inherited data. |
-| 2026-10-07 | D-009 | For Phase 0 the pasted P0 prompt's task list (P0-01..P0-13) supersedes the Phase 0 list originally written in this file. Original items not covered are carried forward in DISCOVERED. For later phases the phase prompt is authoritative and TODO.md is the dashboard. | Human ruling, 2026-10-07. |
+| 2026-10-07 | D-009 | CLAUDE.md and TODO.md are the governing documents. A phase prompt is an execution instruction for the approved phase and cannot silently replace TODO.md task definitions. The first P0 run used a pasted prompt with its own 13-task list; that fact is kept (an earlier version of this decision wrongly made that list authoritative). Reconciliation: `reports/P0_RECONCILIATION.md`. | Human correction, 2026-10-07. |
 
 ## Progress log
 
@@ -430,4 +441,6 @@ Newest first, one line per finished task.
 | Date | Task | What changed | Checks | Commit |
 |---|---|---|---|---|
 | 2026-10-06 | Planning | Wrote TODO.md from the 17-phase project plan, in the format of the reference TODO | n/a | n/a |
-| 2026-10-07 | P0-01..P0-11 (pasted prompt) | Repo, tooling, validators, inherited assets, docs, leakage framework; see reports/P0_REPORT.md | 36 tests, ruff, black, mypy, pre-commit pass | see git log |
+| 2026-10-07 | P0 first run (pasted prompt, not TODO.md numbering) | Built repo tooling, validators, schemas, docs, templates, tier and leakage checks, RunLog; pushed to GitHub | 43 tests, 92% coverage, ruff, black, mypy, pre-commit; CI 3.11 and 3.12 green | 1275739 |
+| 2026-10-07 | P0-01, P0-02, P0-03 | Marked done after fixing .gitignore, README goal, CLAUDE.md Data rules, CHECKSUMS.txt, byte-flip test | 45 tests, 92% coverage; ruff, black, mypy clean | reconciliation commit |
+| 2026-10-07 | P0 reconciliation | Wrote reports/P0_RECONCILIATION.md; corrected D-009; reclassified the 13 tasks; added the leakage step to CI | see report section 6 | reconciliation commit |

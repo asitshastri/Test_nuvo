@@ -1,46 +1,31 @@
-# Phase Review: P0
+# Phase Review: P0 (reconciled)
 
 > Evidence labels: `docs/01_EVIDENCE_AND_DECISIONS.md`.
 
 **Date:** 2026-10-07
-**Phase reviewed:** P0 (first phase; no earlier phase exists, so this is a self-review)
-**Reviewer:** Claude Code
+**Reviewer:** Claude Code (self-review; no earlier phase exists)
 
 ## What Was Promised
-13 tasks, P0-01 to P0-13, from the pasted prompt (task list ruled authoritative, TODO.md D-009).
+The 13 Phase 0 tasks in TODO.md (the governing list). The first run instead executed a pasted prompt with a different 13-task list; the mapping is in `reports/P0_RECONCILIATION.md`.
 
 ## What Was Delivered
-All 13. Per-task evidence is in `reports/P0_REPORT.md`.
-
-## Acceptance criteria that needed a caveat
-- P0-01 `make help`: `make` not installed on this machine; Makefile commands verified individually and in CI. UNVERIFIED locally.
-- P0-03 `chmod 444`: Windows read-only attribute only; checksum test enforces integrity.
-- P0-07 "Python 3.11 and 3.12": FACT, CI run 37526419956 succeeded on both.
-- P0-10 owners and due dates: left blank for the human (the prompt's dates fall after the 31 Oct deadline).
-- P0-12 "every script logs": only one data-producing script exists (`load_inherited`) and it logs. Future scripts must follow `RunLog`.
+3 of 13 TODO.md tasks meet their AC (P0-01, P0-02, P0-03). 4 are partial (P0-07, P0-08, P0-09, P0-12), 4 are not done (P0-04, P0-05, P0-06, P0-10), and 2 wait on the human (P0-11, P0-13). Supplementary artefacts from the first run (evidence doc, templates, ingestion order, ontology roadmap, leakage framework, RunLog) exist and are tested but do not count toward TODO.md completion.
 
 ## Tests
 ```
-Tests run: 43
-Passed: 43
-Failed: 0
-Skipped: 0
-Coverage: 92% (src/)
-ruff: clean | black: clean | mypy --strict: clean | pre-commit: 7/7
-CI: success on Python 3.11 and 3.12
+pytest: 45 passed, 0 failed, 0 skipped
+coverage: 92%
+ruff: clean | black --check: clean | mypy --strict: clean | pre-commit: clean
+python -m src.leakage: pass (empty tiers)
+CI: green on Python 3.11 and 3.12
+make: not installed, not run
 ```
 
 ## Regressions
-None.
-
-## Spot checks
-- FACT: inherited CSV hashes match `configs/inherited_checksums.yaml`; 992 and 207 rows (tested).
-- FACT: ontology and ingestion tables are generated from the CSVs.
-- FACT: leakage checks pass on empty state and fail on injected overlaps (tested).
-- FACT: `python -m src.experiments` reads back a real run log.
+None. The first run's report overstated completion (13/13, 38/42 tests, 85% coverage); those numbers were not used.
 
 ## Gate Decision
-**PASS**
+**PASS-WITH-FIXES**
 
 ## Verdict
-Phase 0 meets its acceptance criteria with the caveats above. Proceed to P1 and P3 after human sign-off. Open follow-ups: repository is public (confirm intent), carried-forward TODO.md Phase 0 items (DISCOVERED), human checklist owners.
+No rework needed on what exists. Fix before building on it: P0-05 scope draft and sign-off before P1; P0-06, P0-07, P0-10 and the CI secret scan before P3. Human sign-off is not the only remaining item.

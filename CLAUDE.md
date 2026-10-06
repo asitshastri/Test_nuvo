@@ -33,6 +33,17 @@ A library, model or architecture is a **candidate** until it wins on our fixed s
 9. Public OSINT . include operationally sensitive detail if public. classified inference if public (for such make ner also for such details ).
 10. Never invent citations, numbers, source policies or results. Unknown → say `UNKNOWN`.
 
+## Data rules (from TODO.md; always apply)
+- `data/inherited/` is read-only. Never edit it; derived versions are written elsewhere. Checksums: `data/inherited/CHECKSUMS.txt`, `configs/inherited_checksums.yaml`.
+- Raw, clean, silver, synthetic and gold data live in separate folders, and every annotation record carries its `tier`.
+- Every document is traceable to source, URL, fetch time, content hash and processing version.
+- Every annotation records the `ontology_version` it follows.
+- Test-set annotations are read only by the evaluation script. Never use them for prompts, rules, gazetteer entries, synthetic examples or model choices.
+- Model development uses the DEV split. Each final candidate is run on TEST once, and every TEST run is recorded in the TODO.md Progress log.
+- Commands: `pip install -e ".[dev]"`, `ruff check .`, `black --check src tests`, `mypy src --strict`, `pytest`, `python -m src.leakage`, `python -m src.load_inherited [--dry-run]`, `pre-commit run --all-files`. (`make` targets mirror these where `make` is installed.)
+- **[INT]** tasks (test set, leakage, gold/silver/synthetic separation): never skip, never mark done when only partly met.
+- **[COMP]** tasks (robots.txt, rate limits, terms of use, licences, attribution): never skip, never mark done when only partly met. Where `[COMP]` or hard rule 4 conflicts with a hard rule above it, the stricter reading applies until the human resolves it (see TODO.md Questions).
+
 ## Evidence labels (use in every report)
 `FACT` checked source · `INFERENCE` reasoned · `RECOMMENDATION` our choice ·
 `UNKNOWN` not established · `UNVERIFIED` source exists but not checked.
@@ -118,10 +129,10 @@ fixed slice · metrics before→after · cost · error clusters · KEEP/DROP/MOD
 
 ## Current state  (update at the end of every phase)
 Date: 7 Oct 2026
-Last phase closed: P0 (see `reports/P0_REPORT.md`; awaiting human sign-off)
-Next prompt: P1 (ontology) and P3 (sources); prompts not yet in `prompts/`
+Last phase closed: none. P0 reconciled 2026-10-07: PASS-WITH-FIXES, 3 of 13 TODO.md P0 tasks done (`reports/P0_RECONCILIATION.md`)
+Next: finish P0-05 (scope sign-off) before P1; P0-06, P0-07, P0-10 and the CI secret scan before P3
 Registry: draft (v2.5, 207 inherited sources, all UNVERIFIED) · Ontology: v0.1 draft (992 inherited entities) · Acquisition: not implemented
-Repo: github.com/asitshastri/Test_nuvo (public; CI green on 3.11 and 3.12)
+Repo: github.com/asitshastri/Test_nuvo (PUBLIC, visibility decision pending; CI green on 3.11 and 3.12)
 Gold: 0 docs · Silver: 0 · Model: none · Open blockers: team size, GPU, LLM-API policy undecided
 
 ## Definition of done (31 Oct)
