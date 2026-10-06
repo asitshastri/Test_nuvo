@@ -66,7 +66,7 @@ Data: <corpus docs raw/clean, gold sentences, KB entities, if changed>
 
 | Phase | Name | Scope | Total | Done | In progress | Blocked |
 |---|---|---|---|---|---|---|
-| 0 | Project definition and architecture | V0.1 | 13 | 3 | 0 | 2 |
+| 0 | Project definition and architecture | V0.1 | 13 | 3 | 0 | 3 |
 | 1 | Defence NER ontology | V0.1 | 8 | 0 | 0 | 0 |
 | 2 | Entity knowledge base | V0.1 | 9 | 0 | 0 | 0 |
 | 3 | Source validation and acquisition | V0.1 | 10 | 0 | 0 | 0 |
@@ -83,8 +83,8 @@ Data: <corpus docs raw/clean, gold sentences, KB entities, if changed>
 | 14 | Human-in-the-loop and active learning | Roadmap | 9 | 0 | 0 | 0 |
 | 15 | Continuous model improvement | Roadmap | 10 | 0 | 0 | 0 |
 | 16 | Advanced defence NLP platform | Roadmap | 9 | 0 | 0 | 0 |
-| | **V0.1 total (Phases 0–12)** | | **122** | **3** | **0** | **2** |
-| | **All phases** | | **160** | **3** | **0** | **2** |
+| | **V0.1 total (Phases 0–12)** | | **122** | **3** | **0** | **3** |
+| | **All phases** | | **160** | **3** | **0** | **3** |
 
 **Key numbers** (update these when they change)
 
@@ -102,14 +102,14 @@ Data: <corpus docs raw/clean, gold sentences, KB entities, if changed>
 
 ## Current focus
 
-Phase 0 reconciliation done on 2026-10-07 (see `reports/P0_RECONCILIATION.md`). The engineering foundation is built, pushed and CI-green (45 tests, 92% coverage). Of the 13 original P0 tasks, 3 meet their AC (P0-01, P0-02, P0-03). P0-05 (scope) gates P1; P0-06, P0-07, P0-10 and the CI secret scan gate P3. Verdict: PASS-WITH-FIXES. P1 and P3 have not started.
+Phase 0 reconciliation done on 2026-10-07 (see `reports/P0_RECONCILIATION.md`). The engineering foundation is built, pushed and CI-green (45 tests, 92% coverage). Of the 13 original P0 tasks, 3 meet their AC (P0-01, P0-02, P0-03). P0-05 (scope) gates P1 and is drafted in `docs/v0.1-scope.md`, waiting for human sign-off; P0-06, P0-07, P0-10 and the CI secret scan gate P3. Verdict: PASS-WITH-FIXES. P1 and P3 have not started.
 
 ## Needs you
 
 | Ask | Why | Needed by | Status |
 |---|---|---|---|
 | Decide repository visibility. `asitshastri/Test_nuvo` is PUBLIC and contains `CLAUDE.md`, `TODO.md` and the inherited CSVs | The CSVs are project assets; Claude did not change visibility | now | Pending |
-| Review and sign off `docs/v0.1-scope.md` once Claude drafts it | Gates P1-02 (label set) | P0-05 | Pending |
+| Approve or revise `docs/v0.1-scope.md` (draft written 2026-10-07; decisions D1-D8 listed in section 7 of that file) | Gates P1-02 (label set) | P0-05 | Pending |
 | Sign off `reports/P0_REPORT.md` and `reports/P0_REVIEW.md` | Phase gate | P0 close | Pending |
 | Fill owners and due dates in the Human checklist (below and `docs/05_HUMAN_REVIEW_CHECKLIST.md`) | Annotators and compute have long lead times | P0-13 | Pending |
 | Choose experiment tracking and data versioning (Claude recommends RunLog + hash manifests) | Needed for the ADR | P0-11 | Pending |
@@ -124,7 +124,7 @@ When the human is away, Claude keeps working and never waits. If a task needs th
 | Added | Task | Question | Why it matters | What Claude did meanwhile |
 |---|---|---|---|---|
 | 2026-10-07 | P0 | Should the repository stay public? | It holds the inherited CSVs and planning docs | Left unchanged |
-| 2026-10-07 | P0-05 | Approve V0.1 scope (entity types, languages, source types) after Claude's draft | Gates P1-02 | Not drafted yet; English only per D-005 |
+| 2026-10-07 | P0-05 | Approve or revise the V0.1 scope in `docs/v0.1-scope.md`: entity buckets (13 MUST / 6 SHOULD / 7 LATER inherited types), English only (D-005), source-type buckets, and decisions D1-D8 (state media, re3d_test, OpenAlex slice, paid/registration sources, GOV_ORG/DEF_INDUSTRY/NSAG). | Gates P1-02 | Draft written; nothing marked approved |
 | 2026-10-07 | P0-11 | Accept RunLog + hash manifests, no MLflow/DVC, for V0.1? | Needs an ADR | RunLog already logs runs |
 | 2026-10-07 | P0-08 | Module names: CLAUDE.md or TODO.md convention? | Tree must match architecture.md | Kept CLAUDE.md names |
 | 2026-10-07 | P0-02 | CLAUDE.md hard rules 1-2 say access controls may be defeated; rule 4 and [COMP] say stop. Which holds? | Compliance | Following rule 4 and [COMP] |
@@ -162,7 +162,7 @@ Goal: decide exactly what we are building before writing the system.
 - [x] **P0-02** (S, C) Write `CLAUDE.md`, covering the project context, the data rules from this file, the folder layout, the commands to run, the [INT] and [COMP] rules, and a rule never to edit `data/inherited/`. *AC:* the file exists and every rule in "Data rules" above appears in it. *Status:* Done 2026-10-07: Data rules, commands and [INT]/[COMP] added to CLAUDE.md.
 - [x] **P0-03** (S, C+H) Bring in the inherited assets. The human places the two CSVs. Claude writes SHA-256 checksums to `data/inherited/CHECKSUMS.txt`, sets the files read-only, and adds a test that fails if a checksum changes. *AC:* the checksum test passes, and changing a byte makes it fail. *Status:* Done 2026-10-07: data/inherited/CHECKSUMS.txt, byte-flip test, files read-only.
 - [ ] **P0-04** (S, C+H) Write `docs/project-spec.md`, covering the problem, the research question, the technical objective, the expected outputs and the long-term vision. *AC:* the human has reviewed it. *Status:* Not written. Safe to carry forward.
-- [ ] **P0-05** (S, C+H) Write `docs/v0.1-scope.md`. It splits work into must-have, should-have and later, and records the scope choices: entity types, languages and source types. *AC:* the human has signed it off and the choices are recorded in Decisions. *Status:* Not written. Required before P1; needs the human sign-off.
+- [!] **P0-05** (S, C+H) Write `docs/v0.1-scope.md`. It splits work into must-have, should-have and later, and records the scope choices: entity types, languages and source types. *AC:* the human has signed it off and the choices are recorded in Decisions. *Status:* Draft written 2026-10-07 in `docs/v0.1-scope.md`; blocked on human sign-off (decisions D1-D8 in that file). Not done.
 - [ ] **P0-06** (M, C) Write `docs/architecture.md`. It covers the components (sources → acquisition → raw → processing → annotation → gold/silver/synthetic → training → model → automatic annotation), the inputs and outputs of each stage, the storage layout, and an `docs/adr/` folder with a template. *AC:* every stage has defined input and output formats.  *Status:* Not written. Required before P3. Partial overlap: docs/02_DATA_TIERS.md, docs/03_INGESTION_ORDER.md.
 - [ ] **P0-07** (M, C) Define the data model in `docs/data-model.md` and `schemas/`. This covers the document ID, entity ID, annotation ID and dataset version schemes, and the provenance record. Write JSON Schemas for document, annotation, entity, source and acquisition-log records. *AC:* sample records validate, broken samples fail, and both cases are tested. *Status:* Partial: 4 of 5 JSON Schemas in configs/schemas/ and validators with tests; no acquisition-log schema, ID schemes or provenance doc. Required before P3.
 - [ ] **P0-08** (S, C) Create the repository skeleton. The package has modules for `acquisition`, `processing`, `kb`, `annotation`, `synthetic`, `models`, `evaluation` and `annotator`. Also create `configs/`, `data/{inherited,raw,clean,gold,silver,synthetic}/`, `reports/` and `docs/`. *AC:* the tree matches `docs/architecture.md`. *Status:* Partial: folders exist; package names follow CLAUDE.md, not this list. Needs the human's naming ruling.
@@ -444,3 +444,4 @@ Newest first, one line per finished task.
 | 2026-10-07 | P0 first run (pasted prompt, not TODO.md numbering) | Built repo tooling, validators, schemas, docs, templates, tier and leakage checks, RunLog; pushed to GitHub | 43 tests, 92% coverage, ruff, black, mypy, pre-commit; CI 3.11 and 3.12 green | 1275739 |
 | 2026-10-07 | P0-01, P0-02, P0-03 | Marked done after fixing .gitignore, README goal, CLAUDE.md Data rules, CHECKSUMS.txt, byte-flip test | 45 tests, 92% coverage; ruff, black, mypy clean | reconciliation commit |
 | 2026-10-07 | P0 reconciliation | Wrote reports/P0_RECONCILIATION.md; corrected D-009; reclassified the 13 tasks; added the leakage step to CI | see report section 6 | reconciliation commit |
+| 2026-10-07 | P0-05 (draft only, not done) | Wrote docs/v0.1-scope.md; task stays `[!]` until the human signs off | docs only; 45 tests, ruff, black, mypy, pre-commit, leakage re-run clean | scope-draft commit |
